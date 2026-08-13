@@ -147,6 +147,18 @@ export default function Dashboard({ user, userData, selectedProjectId, onSelectP
         return acc + val;
       }, 0);
       
+      const currencyMap: any = {
+        'ZAR': 'R ',
+        'USD': '$',
+        'GBP': '£',
+        'EUR': '€',
+        'BWP': 'P ',
+        'NAD': 'N$ '
+      };
+      
+      const dominantCurrencyCode = data[0]?.currency || 'ZAR';
+      const dominantSymbol = currencyMap[dominantCurrencyCode] || 'R ';
+      
       let incidentsNum = data.reduce((acc, p: any) => {
         return acc + (p.recordedIncidents ? Number(p.recordedIncidents) : 0);
       }, 0);
@@ -160,7 +172,7 @@ export default function Dashboard({ user, userData, selectedProjectId, onSelectP
 
       setStats({ 
         activeProjects: data.filter((p: any) => !p.isArchived).length,
-        totalValuation: `R ${valNum.toFixed(1)}M`,
+        totalValuation: `${dominantSymbol}${valNum.toFixed(1)}M`,
         activeStaff: mockStaff,
         incidents: incidentsNum,
         overallProgress: progress,

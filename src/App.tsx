@@ -83,21 +83,9 @@ export default function App() {
         });
 
       } else {
-        const guestUser = { uid: 'guest_user_123', email: 'guest@example.com', displayName: 'Guest User' } as any;
-        const guestUserData = {
-          email: 'guest@example.com',
-          fullName: 'Guest User',
-          role: 'Super_Admin',
-          createdAt: new Date().toISOString()
-        };
-        setUser(guestUser);
-        setUserData(guestUserData);
-
-        const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
-        onSnapshot(q, (snapshot) => {
-          let data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          setProjects(data);
-        });
+        setUser(null);
+        setUserData(null);
+        setProjects([]);
       }
       setLoading(false);
     });
